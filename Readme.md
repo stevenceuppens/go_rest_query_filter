@@ -2,6 +2,27 @@
 
 This library can parse a json formatted filter (JSON format) to allow inspection, and conversion into go mgo query (Go Mongo driver)
 
+## Install
+```
+$ go get github.com/stevenceuppens/go_rest_query_filter
+```
+
+## Import
+```golang
+import "github.com/stevenceuppens/go_rest_query_filter"
+```
+
+## Use
+main function to use is
+```golang
+rqf.ParseFilter( url_string|query_string|filter_value )
+```
+
+This function accepts the json object (both encoded as decoded) in following formats
+- {json filter}
+- ?filter={json filter}
+- /api/v1/books?filter={json filter}
+- http://xxx:3000/api/v1/books?filter={json filter}
 ---
 
 ## Field selection
