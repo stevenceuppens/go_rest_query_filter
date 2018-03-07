@@ -9,7 +9,7 @@ $ go get github.com/stevenceuppens/go_rest_query_filter
 
 ## Import
 ```golang
-import "github.com/stevenceuppens/go_rest_query_filter"
+import "github.com/stevenceuppens/go_rest_query_filter/pkg/rqf"
 ```
 
 ## Use
@@ -19,10 +19,12 @@ rqf.ParseFilter( url_string|query_string|filter_value )
 ```
 
 This function accepts the json object (both encoded as decoded) in following formats
+```
 - {json filter}
 - ?filter={json filter}
 - /api/v1/books?filter={json filter}
 - http://xxx:3000/api/v1/books?filter={json filter}
+```
 ---
 
 ## Field selection
@@ -31,43 +33,43 @@ Allows to select which fields should be returned
 
 JSON object to filter fields
 ```json
-{"fields":{"ID":true,"name":true}}
+{"fields":{"id":true,"name":true}}
 ```
 
 URL encoded
 ```
-http://localhost:3000/api/books?filter=%7B%22fields%22%3A%7B%22ID%22%3Atrue%2C%22name%22%3Atrue%7D%7D
+http://localhost:3000/api/books?filter=%7B%22fields%22%3A%7B%22id%22%3Atrue%2C%22name%22%3Atrue%7D%7D
 ```
 
 Code to parse and convert JSON filter into Mgo
 ```golang
 // parse the json
-query, err := rqf.ParseFilter( url_string|query_string|filter_value )
+filter, err := rqf.ParseFilter( url_string|query_string|filter_value )
 
 // basic query
-q := mgoSession.DB("myDB").C("myCollection").Find(nil)
+query := mgoSession.DB("myDB").C("myCollection").Find(nil)
 
 // auto inject field selection in mgo query
-query.MgoFields(q)
+filter.MgoFields(query)
 
 // execute
-q.All(&data)
+query.All(&data)
 ```
 
 Result
 ```json
 [
   {
-    "ID": "5a9ea44d7cb20300b70daaae",
-    "Name": "Book1"
+    "id": "5a9ea44d7cb20300b70daaae",
+    "name": "Book1"
   },
   {
-    "ID": "5a9ea44d7cb20300b70daaaf",
-    "Name": "Book2"
+    "id": "5a9ea44d7cb20300b70daaaf",
+    "name": "Book2"
   },
   {
-    "ID": "5a9ea44d7cb20300b70daab0",
-    "Name": "Book3"
+    "id": "5a9ea44d7cb20300b70daab0",
+    "name": "Book3"
   }
 ]
 ```
@@ -97,46 +99,46 @@ http://localhost:3000/api/books?filter=%7B%22order%22%3A%5B%22isbn%20ASC%22%5D%7
 Code to parse and convert JSON filter into Mgo
 ```golang
 // parse the json
-query, err := rqf.ParseFilter( url_string|query_string|filter_value )
+filter, err := rqf.ParseFilter( url_string|query_string|filter_value )
 
 // basic query
-q := mgoSession.DB("myDB").C("myCollection").Find(nil)
+query := mgoSession.DB("myDB").C("myCollection").Find(nil)
 
 // auto inject field selection in mgo query
-query.MgoOrder(q)
+filter.MgoOrder(query)
 
 // execute
-q.All(&data)
+query.All(&data)
 ```
 
 Result
 ```json
 [
   {
-    "ID": "5a9ea44d7cb20300b70daaaf",
-    "Name": "Book2",
-    "ISBN": "A_ISBN",
-    "Meta": {
-      "Active": true,
-      "Created": "2018-03-06T14:23:09.607Z"
+    "id": "5a9ea44d7cb20300b70daaaf",
+    "name": "Book2",
+    "isbn": "A_ISBN",
+    "meta": {
+      "active": true,
+      "created": "2018-03-06T14:23:09.607Z"
     }
   },
   {
-    "ID": "5a9ea44d7cb20300b70daab0",
-    "Name": "Book3",
-    "ISBN": "B_ISBN",
-    "Meta": {
-      "Active": true,
-      "Created": "2018-03-06T14:23:09.607Z"
+    "id": "5a9ea44d7cb20300b70daab0",
+    "name": "Book3",
+    "isbn": "B_ISBN",
+    "meta": {
+      "active": true,
+      "created": "2018-03-06T14:23:09.607Z"
     }
   },
   {
-    "ID": "5a9ea44d7cb20300b70daaae",
-    "Name": "Book1",
-    "ISBN": "C_ISBN",
-    "Meta": {
-      "Active": true,
-      "Created": "2018-03-06T14:23:09.607Z"
+    "id": "5a9ea44d7cb20300b70daaae",
+    "name": "Book1",
+    "isbn": "C_ISBN",
+    "meta": {
+      "active": true,
+      "created": "2018-03-06T14:23:09.607Z"
     }
   }
 ]

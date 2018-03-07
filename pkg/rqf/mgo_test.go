@@ -24,14 +24,14 @@ func connectMgo() *mgo.Session {
 }
 
 type Meta struct {
-	Active  bool       `bson:"active" json:",omitempty"`
-	Created *time.Time `bson:"created" json:",omitempty"`
+	Active  bool       `bson:"active" json:"active,omitempty"`
+	Created *time.Time `bson:"created" json:"created,omitempty"`
 }
 type Book struct {
-	ID   bson.ObjectId `bson:"_id" json:",omitempty"`
-	Name string        `bson:"name" json:",omitempty"`
-	ISBN string        `bson:"isbn" json:",omitempty"`
-	Meta *Meta         `bson:"meta" json:",omitempty"`
+	ID   bson.ObjectId `bson:"_id" json:"id,omitempty"`
+	Name string        `bson:"name" json:"name,omitempty"`
+	ISBN string        `bson:"isbn" json:"isbn,omitempty"`
+	Meta *Meta         `bson:"meta" json:"meta,omitempty"`
 }
 type BookList []*Book
 

@@ -8,7 +8,7 @@ import (
 )
 
 // MgoFilter will add all filters to the Mongo Query
-func (q *Query) MgoFilter(mq *mgo.Query) *mgo.Query {
+func (q *Filter) MgoFilter(mq *mgo.Query) *mgo.Query {
 	tq := q.MgoFields(mq)
 	tq = q.MgoWhere(tq)
 	tq = q.MgoOrder(tq)
@@ -18,7 +18,7 @@ func (q *Query) MgoFilter(mq *mgo.Query) *mgo.Query {
 }
 
 // MgoFields will add field filter to the Mongo Query
-func (q *Query) MgoFields(mq *mgo.Query) *mgo.Query {
+func (q *Filter) MgoFields(mq *mgo.Query) *mgo.Query {
 	mgoSelect := bson.M{}
 	for field := range q.Fields {
 		mgoSelect[field] = 1
@@ -27,13 +27,13 @@ func (q *Query) MgoFields(mq *mgo.Query) *mgo.Query {
 }
 
 // MgoWhere will add where filter to the Mongo Query
-func (q *Query) MgoWhere(mq *mgo.Query) *mgo.Query {
+func (q *Filter) MgoWhere(mq *mgo.Query) *mgo.Query {
 	// TODO
 	return mq
 }
 
 // MgoOrder will add order filter to the Mongo Query
-func (q *Query) MgoOrder(mq *mgo.Query) *mgo.Query {
+func (q *Filter) MgoOrder(mq *mgo.Query) *mgo.Query {
 	sort := []string{}
 	for _, value := range q.Order {
 		strippedValue := strings.Split(value, " ")
@@ -47,11 +47,11 @@ func (q *Query) MgoOrder(mq *mgo.Query) *mgo.Query {
 }
 
 // MgoLimit will add limit field filter to the Mongo Query
-func (q *Query) MgoLimit(mq *mgo.Query) *mgo.Query {
+func (q *Filter) MgoLimit(mq *mgo.Query) *mgo.Query {
 	return mq.Limit(q.Limit)
 }
 
 // MgoOffset will add offset filter to the Mongo Query
-func (q *Query) MgoOffset(mq *mgo.Query) *mgo.Query {
+func (q *Filter) MgoOffset(mq *mgo.Query) *mgo.Query {
 	return mq.Skip(q.Offset)
 }

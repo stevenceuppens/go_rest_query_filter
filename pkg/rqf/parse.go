@@ -7,24 +7,24 @@ import (
 )
 
 // ParseFilter ...
-func ParseFilter(filter string) (*Query, error) {
+func ParseFilter(data string) (*Filter, error) {
 
-	normalizedFilter, err := normalizeFilter(filter)
+	normalizedFilter, err := normalizeFilter(data)
 	if err != nil {
 		return nil, err
 	}
 
-	query, err := parseJSONFilter(normalizedFilter)
+	filter, err := parseJSONFilter(normalizedFilter)
 	if err != nil {
 		return nil, err
 	}
 
-	return query, nil
+	return filter, nil
 }
 
 // normalizeFilter will filter the 'filter' query parameter from the string
-func normalizeFilter(filter string) (string, error) {
-	stripped := filter
+func normalizeFilter(data string) (string, error) {
+	stripped := data
 
 	index := strings.Index(stripped, "?filter=")
 	if index != -1 {
@@ -41,13 +41,13 @@ func normalizeFilter(filter string) (string, error) {
 }
 
 // parseJSONFilter will parse the json into a Query object
-func parseJSONFilter(filter string) (*Query, error) {
-	query := NewQuery()
+func parseJSONFilter(data string) (*Filter, error) {
+	filter := NewFilter()
 
-	err := json.Unmarshal([]byte(filter), query)
+	err := json.Unmarshal([]byte(data), filter)
 	if err != nil {
 		return nil, err
 	}
 
-	return query, nil
+	return filter, nil
 }

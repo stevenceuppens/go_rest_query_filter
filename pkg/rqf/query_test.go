@@ -11,26 +11,26 @@ var _ = Describe("Query", func() {
 
 	Describe("NewQuery", func() {
 
-		q := NewQuery()
+		filter := NewFilter()
 
 		It("Fields should be empty by default", func() {
-			Expect(len(q.Fields)).To(Equal(0))
+			Expect(len(filter.Fields)).To(Equal(0))
 		})
 
 		It("Where should be empty by default", func() {
-			Expect(len(q.Where)).To(Equal(0))
+			Expect(len(filter.Where)).To(Equal(0))
 		})
 
 		It("Order should be empty by default", func() {
-			Expect(len(q.Order)).To(Equal(0))
+			Expect(len(filter.Order)).To(Equal(0))
 		})
 
 		It("Offset should be empty by default", func() {
-			Expect(q.Offset).To(Equal(0))
+			Expect(filter.Offset).To(Equal(0))
 		})
 
 		It("Limit should be empty by default", func() {
-			Expect(q.Limit).To(Equal(-1))
+			Expect(filter.Limit).To(Equal(0))
 		})
 	})
 })

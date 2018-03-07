@@ -2,8 +2,8 @@ package rqf
 
 import "encoding/json"
 
-// Query ...
-type Query struct {
+// Filter ...
+type Filter struct {
 	Fields map[string]bool        `json:"fields"`
 	Where  map[string]interface{} `json:"where"`
 	Order  []string               `json:"order"`
@@ -11,16 +11,17 @@ type Query struct {
 	Limit  int                    `json:"limit"`
 }
 
-// NewQuery ...
-func NewQuery() *Query {
-	query := &Query{
+// NewFilter ...
+func NewFilter() *Filter {
+	filter := &Filter{
 		Offset: 0,
-		Limit:  -1,
+		Limit:  0,
 	}
-	return query
+	return filter
 }
 
-func (q *Query) String() string {
+// String ...
+func (q *Filter) String() string {
 	json, err := json.Marshal(q)
 	if err != nil {
 		return ""
