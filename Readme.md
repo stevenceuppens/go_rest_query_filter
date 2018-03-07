@@ -104,7 +104,7 @@ filter, err := rqf.ParseFilter( url_string|query_string|filter_value )
 // basic query
 query := mgoSession.DB("myDB").C("myCollection").Find(nil)
 
-// auto inject field selection in mgo query
+// auto inject ordering in mgo query
 filter.MgoOrder(query)
 
 // execute
@@ -142,5 +142,35 @@ Result
     }
   }
 ]
-
 ```
+
+## Page results
+
+Allows to page the results.
+
+JSON object to add paging
+```json
+{"limit":20,"offset":40}
+```
+
+URL encoded
+```
+http://localhost:3000/api/books?filter=%7B%22limit%22%3A20%2C%22offset%22%3A40%7D
+```
+
+Code to parse and convert JSON filter into Mgo
+```golang
+// parse the json
+filter, err := rqf.ParseFilter( url_string|query_string|filter_value )
+
+// basic query
+query := mgoSession.DB("myDB").C("myCollection").Find(nil)
+
+// auto inject paging in mgo query
+filter.MgoLimit(query)
+filter.MgoOffset(query)
+
+// execute
+query.All(&data)
+```
+---
